@@ -83,17 +83,9 @@ let buildTree = function (board) {
         if (vtex[1] >= 2) {
           if (
             (row === vtex[0] + 2 && col === vtex[1] - 1) ||
-            (row === vtex[0] + 2 && col === vtex[1] + 1)
-          ) {
-            graph.setEdge(vtex, cell);
-          }
-          if (
+            (row === vtex[0] + 2 && col === vtex[1] + 1) ||
             (row === vtex[0] + 1 && col === vtex[1] + 2) ||
-            (row === vtex[0] - 1 && col === vtex[1] + 2)
-          ) {
-            graph.setEdge(vtex, cell);
-          }
-          if (
+            (row === vtex[0] - 1 && col === vtex[1] + 2) ||
             (row === vtex[0] + 1 && col === vtex[1] - 2) ||
             (row === vtex[0] - 1 && col === vtex[1] - 2)
           ) {
@@ -105,11 +97,7 @@ let buildTree = function (board) {
         if (vtex[1] === 1) {
           if (
             (row === vtex[0] + 2 && col === vtex[1] - 1) ||
-            (row === vtex[0] + 2 && col === vtex[1] + 1)
-          ) {
-            graph.setEdge(vtex, cell);
-          }
-          if (
+            (row === vtex[0] + 2 && col === vtex[1] + 1) ||
             (row === vtex[0] - 2 && col === vtex[1] - 1) ||
             (row === vtex[0] - 2 && col === vtex[1] + 1)
           ) {
@@ -119,23 +107,11 @@ let buildTree = function (board) {
         if (vtex[1] >= 2) {
           if (
             (row === vtex[0] + 2 && col === vtex[1] - 1) ||
-            (row === vtex[0] + 2 && col === vtex[1] + 1)
-          ) {
-            graph.setEdge(vtex, cell);
-          }
-          if (
+            (row === vtex[0] + 2 && col === vtex[1] + 1) ||
             (row === vtex[0] - 2 && col === vtex[1] - 1) ||
-            (row === vtex[0] - 2 && col === vtex[1] + 1)
-          ) {
-            graph.setEdge(vtex, cell);
-          }
-          if (
+            (row === vtex[0] - 2 && col === vtex[1] + 1) ||
             (row === vtex[0] - 1 && col === vtex[1] + 2) ||
-            (row === vtex[0] + 1 && col === vtex[1] + 2)
-          ) {
-            graph.setEdge(vtex, cell);
-          }
-          if (
+            (row === vtex[0] + 1 && col === vtex[1] + 2) ||
             (row === vtex[0] - 1 && col === vtex[1] - 2) ||
             (row === vtex[0] + 1 && col === vtex[1] - 2)
           ) {
@@ -148,7 +124,29 @@ let buildTree = function (board) {
 };
 
 buildTree(gameBoard);
-console.log(graph.nodes.values());
-for (const node of graph.nodes.values()) {
-  console.log(node);
-}
+
+const breathFirst = function (cell = [0, 0]) {
+  let queue = [];
+  let visited = [];
+  let vertex = graph.nodes.values().next().value;
+
+  queue.push(vertex);
+  visited.push(vertex.data);
+
+  while (queue.length > 0) {
+    let node = queue.shift();
+    node.adjacent.forEach((n) => {
+      if (!visited.includes(n.data)) {
+        queue.push(n);
+      }
+    });
+    if (!visited.includes(node.data)) {
+      visited.push(node.data);
+      console.log(node.data[0], node.data[1]);
+      if (node.data[0] === cell[0] && node.data[1] === cell[1]) break;
+    }
+  }
+  return visited;
+};
+
+console.log(breathFirst([3, 3]));
