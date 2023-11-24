@@ -295,11 +295,15 @@ const travail = function (arr) {
 
 //Clean board for new game
 const boardClean = function () {
+  startCell = endCell = "";
+  gameboard.classList.remove("marked_start");
+  gameboard.classList.remove("marked_end");
   let board = [...gameboard.children];
   board.forEach((cell) => {
     if (cell.classList.contains("knightOn")) {
       cell.classList.remove("knightOn");
       cell.classList.remove("path");
+      cell.classList.remove("endPoint");
     }
     if ([...cell.children].length > 0) {
       cell.removeChild(icon);
@@ -336,7 +340,7 @@ form.addEventListener("click", (e) => {
 
       travail(path).then((v) => {
         if (v) {
-          setTimeout(() => boardClean(), 3000);
+          setTimeout(() => boardClean(), 2000);
         }
       });
     }
