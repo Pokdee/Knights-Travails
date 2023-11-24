@@ -5,7 +5,8 @@
   "main": "./scripts/scripts.js",
   "scripts": {
     "build": "webpack",
-    "live": "npx webpack serve"
+    "live": "npx webpack serve",
+    "host-page": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
